@@ -1,9 +1,10 @@
-package com.bangover.carsalescovid
+package com.bangover.carsalescovid.ui.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.bangover.carsalescovid.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         val handler = Handler()
         handler.postDelayed({
-            val intent = Intent(this, InfoCovid::class.java)
+            val intent = Intent(this, InfoCovidactivity::class.java)
             startActivity(intent)
         }, 3000)
 
