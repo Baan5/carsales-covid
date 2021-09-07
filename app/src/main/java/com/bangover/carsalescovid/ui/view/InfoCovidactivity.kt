@@ -1,12 +1,14 @@
 package com.bangover.carsalescovid.ui.view
 
 import android.annotation.SuppressLint
+import android.icu.util.LocaleData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.bangover.carsalescovid.Core.DatePickerFragment
 import com.bangover.carsalescovid.databinding.ActivityInfoCovidBinding
 import com.bangover.carsalescovid.ui.viewModel.CovidViewModel
@@ -23,6 +25,8 @@ class InfoCovidactivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInfoCovidBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //covidViewModel = ViewModelProvider(this).get(CovidViewModel::class.java)
 
         covidViewModel.visibility.postValue(true)
         covidViewModel.getTotalReports(currentDate())

@@ -7,13 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.bangover.carsalescovid.data.model.CovidModel
 import com.bangover.carsalescovid.data.model.DataModel
 import com.bangover.carsalescovid.domain.GetTotalReportsUseCase
+import javax.inject.Inject
 
-class CovidViewModel: ViewModel() {
+class CovidViewModel @Inject constructor(val getTotalReportsUseCase: GetTotalReportsUseCase): ViewModel() {
 
 
     val dataCovid = MutableLiveData<CovidModel?>()
     val visibility = MutableLiveData<Boolean>()
-    val getTotalReportsUseCase = GetTotalReportsUseCase()
+    //val getTotalReportsUseCase = GetTotalReportsUseCase()
 
     @SuppressLint("CheckResult")
     fun getTotalReports(date:String){
