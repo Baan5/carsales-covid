@@ -45,7 +45,7 @@ class InfoCovidActivity : AppCompatActivity() {
                 var confirmed = format.format(data.data.confirmed)
                 var death = format.format(data.data.deaths)
 
-                binding.tvFecha.text = data.data.date
+                binding.tvFecha.text = convertDate(data.data.date)
                 binding.tvConfirmados.text = confirmed.replace(",", ".")
                 binding.tvFallecidos.text = death.replace(",", ".")
             }else{
@@ -58,6 +58,32 @@ class InfoCovidActivity : AppCompatActivity() {
             binding.progressCircular.isVisible = it
             binding.lyData.isVisible = !it
         })
+
+    }
+
+    private fun convertDate(fecha: String): String{
+
+        var meses = arrayOf(
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Obtubre",
+            "Noviembre",
+            "Diciembre"
+        )
+
+        var parts = fecha.split("-")
+        var mes:Int = 0
+
+        if (parts[1].toInt() < 10) mes = parts[1].toInt()
+
+        return String.format("%s de %s del %s", parts[2], meses[mes-1], parts[0])
 
     }
 

@@ -11,8 +11,7 @@ class GetTotalReportsUseCase @Inject constructor(val repository: CovidRepository
 
     //private val repositoy = CovidRepository()
 
-    operator fun invoke(date:String): Single<CovidModel> = repository.getTotalReports(date)
-        .observeOn(AndroidSchedulers.mainThread())
+    suspend operator fun invoke(date:String): CovidModel? = repository.getTotalReports(date)
 
 
 }

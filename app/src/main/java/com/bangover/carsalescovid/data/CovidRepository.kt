@@ -10,7 +10,7 @@ class CovidRepository @Inject constructor(val api: CovidService) {
 
     //val api = CovidService()
 
-    fun getTotalReports(date:String): Single<CovidModel> {
+    suspend fun getTotalReports(date:String): CovidModel? {
         return api.getTotalReports(date)
     }
 
