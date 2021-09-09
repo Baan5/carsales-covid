@@ -12,21 +12,27 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangover.carsalescovid.Core.DatePickerFragment
 import com.bangover.carsalescovid.databinding.ActivityInfoCovidBinding
 import com.bangover.carsalescovid.ui.viewModel.CovidViewModel
+import com.bangover.carsalescovid.ui.viewModel.ViewModelFactory
+import dagger.android.AndroidInjection
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class InfoCovidactivity : AppCompatActivity() {
+class InfoCovidActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInfoCovidBinding
-    private val covidViewModel: CovidViewModel by viewModels()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val covidViewModel: CovidViewModel by viewModels{viewModelFactory}
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityInfoCovidBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //covidViewModel = ViewModelProvider(this).get(CovidViewModel::class.java)
 
         covidViewModel.visibility.postValue(true)
         covidViewModel.getTotalReports(currentDate())
