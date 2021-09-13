@@ -1,5 +1,6 @@
 package com.bangover.carsalescovid.Core
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
@@ -16,15 +17,12 @@ class DatePickerFragment(val listener: (day: Int, month: Int, year: Int) -> Unit
         listener(day, month, year)
     }
 
+    @SuppressLint("SimpleDateFormat")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        var timeInMillis: Long = 0
         val sdf = SimpleDateFormat("yyyy MM dd")
-        try {
-            val mDate: Date = sdf.parse("2020 01 22")
-            timeInMillis = mDate.time
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
+        val mDate: Date = sdf.parse("2020 01 22")
+        val timeInMillis = mDate.time
+
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)

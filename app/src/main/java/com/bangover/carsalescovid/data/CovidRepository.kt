@@ -8,8 +8,6 @@ import javax.inject.Inject
 
 class CovidRepository @Inject constructor(val api: CovidService) {
 
-    //val api = CovidService()
-
     suspend fun getTotalReports(date:String): CovidModel? {
         return api.getTotalReports(date)
     }

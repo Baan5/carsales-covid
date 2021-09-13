@@ -16,39 +16,20 @@ class CovidViewModel @Inject constructor(val getTotalReportsUseCase: GetTotalRep
 
     val dataCovid = MutableLiveData<CovidModel?>()
     val visibility = MutableLiveData<Boolean>()
-    //val getTotalReportsUseCase = GetTotalReportsUseCase()
 
     @SuppressLint("CheckResult")
     fun getTotalReports(date:String){
-
         viewModelScope.launch {
             val result = getTotalReportsUseCase(date)
 
             if (result != null){
                 dataCovid.postValue(result)
                 visibility.postValue(false)
-            }else{
+            }else {
                 visibility.postValue(false)
                 dataCovid.postValue(null)
             }
-
-
         }
-
-
-        /*getTotalReportsUseCase(date)
-            .subscribe(
-                { covid ->
-                    dataCovid.postValue(covid)
-                    Log.d("getTag", "getTotalReports: ${covid.data.confirmed}")
-                    visibility.postValue(false)
-                },
-                { error ->
-                    Log.e("getTag", "getTotalReports: ${error.message}", )
-                    visibility.postValue(false)
-                    dataCovid.postValue(null)
-                }
-            )*/
     }
 
 }

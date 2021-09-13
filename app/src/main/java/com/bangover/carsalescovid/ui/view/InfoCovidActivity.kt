@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.bangover.carsalescovid.Core.DatePickerFragment
+import com.bangover.carsalescovid.Core.replaceCommaToPoint
 import com.bangover.carsalescovid.databinding.ActivityInfoCovidBinding
 import com.bangover.carsalescovid.ui.viewModel.CovidViewModel
 import com.bangover.carsalescovid.ui.viewModel.ViewModelFactory
@@ -46,8 +47,8 @@ class InfoCovidActivity : AppCompatActivity() {
                 var death = format.format(data.data.deaths)
 
                 binding.tvFecha.text = convertDate(data.data.date)
-                binding.tvConfirmados.text = confirmed.replace(",", ".")
-                binding.tvFallecidos.text = death.replace(",", ".")
+                binding.tvConfirmados.text = confirmed.replaceCommaToPoint()
+                binding.tvFallecidos.text = death.replaceCommaToPoint()
             }else{
                 Toast.makeText(this, "Fecha seleccionada sin resultados", Toast.LENGTH_LONG).show()
             }
@@ -63,7 +64,7 @@ class InfoCovidActivity : AppCompatActivity() {
 
     private fun convertDate(fecha: String): String{
 
-        var meses = arrayOf(
+        var mMonth = arrayOf(
             "Enero",
             "Febrero",
             "Marzo",
@@ -79,11 +80,11 @@ class InfoCovidActivity : AppCompatActivity() {
         )
 
         var parts = fecha.split("-")
-        var mes:Int = 0
+        var mNameMonth:Int = 0
 
-        if (parts[1].toInt() < 10) mes = parts[1].toInt()
+        if (parts[1].toInt() < 10) mNameMonth = parts[1].toInt()
 
-        return String.format("%s de %s del %s", parts[2], meses[mes-1], parts[0])
+        return String.format("%s de %s del %s", parts[2], mMonth[mNameMonth-1], parts[0])
 
     }
 
