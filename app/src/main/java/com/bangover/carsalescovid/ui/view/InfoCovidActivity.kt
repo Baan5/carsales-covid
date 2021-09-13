@@ -1,25 +1,36 @@
 package com.bangover.carsalescovid.ui.view
 
 import android.annotation.SuppressLint
+import android.icu.util.LocaleData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.bangover.carsalescovid.Core.DatePickerFragment
+import com.bangover.carsalescovid.Core.replaceCommaToPoint
 import com.bangover.carsalescovid.databinding.ActivityInfoCovidBinding
 import com.bangover.carsalescovid.ui.viewModel.CovidViewModel
+import com.bangover.carsalescovid.ui.viewModel.ViewModelFactory
+import dagger.android.AndroidInjection
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class InfoCovidactivity : AppCompatActivity() {
+class InfoCovidActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInfoCovidBinding
-    private val covidViewModel: CovidViewModel by viewModels()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val covidViewModel: CovidViewModel by viewModels{viewModelFactory}
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityInfoCovidBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -35,9 +46,9 @@ class InfoCovidactivity : AppCompatActivity() {
                 var confirmed = format.format(data.data.confirmed)
                 var death = format.format(data.data.deaths)
 
-                binding.tvFecha.text = data.data.date
-                binding.tvConfirmados.text = confirmed.replace(",", ".")
-                binding.tvFallecidos.text = death.replace(",", ".")
+                binding.tvFecha.text = convertDate(data.data.date)
+                binding.tvConfirmados.text = confirmed.replaceCommaToPoint()
+                binding.tvFallecidos.text = death.replaceCommaToPoint()
             }else{
                 Toast.makeText(this, "Fecha seleccionada sin resultados", Toast.LENGTH_LONG).show()
             }
@@ -48,6 +59,32 @@ class InfoCovidactivity : AppCompatActivity() {
             binding.progressCircular.isVisible = it
             binding.lyData.isVisible = !it
         })
+
+    }
+
+    private fun convertDate(fecha: String): String{
+
+        var mMonth = arrayOf(
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Obtubre",
+            "Noviembre",
+            "Diciembre"
+        )
+
+        var parts = fecha.split("-")
+        var mNameMonth:Int = 0
+
+        if (parts[1].toInt() < 10) mNameMonth = parts[1].toInt()
+
+        return String.format("%s de %s del %s", parts[2], mMonth[mNameMonth-1], parts[0])
 
     }
 

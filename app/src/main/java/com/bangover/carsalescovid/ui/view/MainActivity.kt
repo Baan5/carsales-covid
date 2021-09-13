@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         val handler = Handler()
         handler.postDelayed({
-            val intent = Intent(this, InfoCovidactivity::class.java)
+            val intent = Intent(this, InfoCovidActivity::class.java)
             startActivity(intent)
         }, 3000)
 
