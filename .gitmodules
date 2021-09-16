@@ -1,0 +1,10 @@
+[submodule "android.basemodule"]
+	path = android.basemodule
+	url = git@github.com:carsales-PRIVATE/android.basemodule.git
+	branch = develop
+[submodule "android.routercovidmodule"]
+	path = android.routercovidmodule
+	url = git@github.com:Baan5/android.routercovidmodule.git
+[submodule "android.covidapiservicemodule"]
+	path = android.covidapiservicemodule
+	url = git@github.com:Baan5/android.covidapiservicemodule.git

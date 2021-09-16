@@ -6,21 +6,22 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk androidCompileSdkVersion
 
     defaultConfig {
         applicationId "com.bangover.carsalescovid"
-        minSdk 21
-        targetSdk 30
+        minSdk androidMinSdkVersion
+        targetSdk androidTargetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -38,6 +39,11 @@ android {
 }
 
 dependencies {
+
+    implementation project(':basemodule')
+    implementation project(':routercovidmodule')
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'

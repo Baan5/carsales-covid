@@ -9,6 +9,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
+import javax.inject.Named
 
 @Module
 class ApiModule {
@@ -17,8 +18,6 @@ class ApiModule {
         const val BASE_ENDPOINT = "https://covid-19-statistics.p.rapidapi.com/reports/"
     }
 
-    @Provides
-    @Singleton
     fun provideGson(): Gson {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -27,6 +26,7 @@ class ApiModule {
 
     @Provides
     @Singleton
+    @Named("provideOkHttpClient")
     fun provideOkhttpClient(): OkHttpClient {
         val client = OkHttpClient.Builder()
         return client.build()
@@ -34,10 +34,10 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideApiService(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
+    fun provideApiService(@Named("provideOkHttpClient") okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(ApiConstants.BASE_ENDPOINT)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(provideGson()))
             .client(okHttpClient)
             .build()
     }
