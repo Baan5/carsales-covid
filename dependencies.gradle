@@ -25,7 +25,7 @@ ext {
     rxKotlinVersion = '0.60.0'
     multidexVersion = '1.0.3'
     javaxInjectVersion = '1'
-    glideVersion = '4.9.0'
+    glideVersion = '4.11.0'
 
     junitVersion = '4.12'
     runnerVersion = '1.0.2'
@@ -35,4 +35,5 @@ ext {
     nav_version = '1.0.0'
     eventbus_version = "3.1.1"
     ktx_version = "1.0.0-alpha1"
+
 }

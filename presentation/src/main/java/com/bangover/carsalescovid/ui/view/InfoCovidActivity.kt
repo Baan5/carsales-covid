@@ -1,36 +1,27 @@
 package com.bangover.carsalescovid.ui.view
 
 import android.annotation.SuppressLint
-import android.icu.util.LocaleData
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.bangover.carsalescovid.Core.DatePickerFragment
-import com.bangover.carsalescovid.Core.replaceCommaToPoint
 import com.bangover.carsalescovid.databinding.ActivityInfoCovidBinding
+import com.bangover.carsalescovid.replaceCommaToPoint
 import com.bangover.carsalescovid.ui.viewModel.CovidViewModel
-import com.bangover.carsalescovid.ui.viewModel.ViewModelFactory
-import dagger.android.AndroidInjection
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
 class InfoCovidActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInfoCovidBinding
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val covidViewModel: CovidViewModel by viewModels{viewModelFactory}
+    private val covidViewModel: CovidViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         binding = ActivityInfoCovidBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -108,6 +99,7 @@ class InfoCovidActivity : AppCompatActivity() {
         Log.d("getTag", "onDateSelected: " + String.format("%s-%s-%s", year, mes, dia))
         covidViewModel.visibility.postValue(true)
         covidViewModel.getTotalReports(String.format("%s-%s-%s", year, mes, dia))
+
     }
 
     @SuppressLint("SimpleDateFormat")
