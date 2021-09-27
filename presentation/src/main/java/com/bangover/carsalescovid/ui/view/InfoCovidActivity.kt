@@ -18,6 +18,7 @@ import java.util.*
 class InfoCovidActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInfoCovidBinding
+    val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
 
     private val covidViewModel: CovidViewModel by viewModels()
 
@@ -26,8 +27,14 @@ class InfoCovidActivity : AppCompatActivity() {
         binding = ActivityInfoCovidBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        currentDate()
         covidViewModel.visibility.postValue(true)
-        covidViewModel.getTotalReports(currentDate())
+        covidViewModel.currentDate.observe(this, {
+            covidViewModel.getTotalReports()
+        })
+        covidViewModel.selectedDate.observe(this, {
+            covidViewModel.getTotalReports()
+        })
 
         binding.btnDate.setOnClickListener{showDatePicker()}
 
@@ -80,7 +87,6 @@ class InfoCovidActivity : AppCompatActivity() {
     }
 
     private fun showDatePicker() {
-        val datePicker = DatePickerFragment { day, month, year -> onDateSelected(day, month, year) }
         datePicker.show(supportFragmentManager, "datePicker")
     }
 
@@ -98,18 +104,26 @@ class InfoCovidActivity : AppCompatActivity() {
 
         Log.d("getTag", "onDateSelected: " + String.format("%s-%s-%s", year, mes, dia))
         covidViewModel.visibility.postValue(true)
-        covidViewModel.getTotalReports(String.format("%s-%s-%s", year, mes, dia))
-
+        covidViewModel.selectedDate.postValue(String.format("%s-%s-%s", year, mes, dia))
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun currentDate():String{
+    private fun currentDate(){
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         var fecha = Calendar.getInstance()
         fecha.time = Date()
         fecha.add(Calendar.DAY_OF_MONTH, -1)
         val currentDate = sdf.format(fecha.time)
-        Log.d("getTag", "currentDate: $currentDate")
-        return currentDate
+        covidViewModel.currentDate.postValue(currentDate)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        datePicker.dismiss()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        datePicker.dismiss()
     }
 }

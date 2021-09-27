@@ -15,11 +15,17 @@ class CovidViewModel: ViewModel(){
 
     val dataCovid = MutableLiveData<CovidModel?>()
     val visibility = MutableLiveData<Boolean>()
+    val currentDate = MutableLiveData<String>()
+    val selectedDate = MutableLiveData<String>()
 
     @SuppressLint("CheckResult")
-    fun getTotalReports(date:String){
+    fun getTotalReports(){
 
         viewModelScope.launch {
+            var date:String
+            if (selectedDate.value != null) date = selectedDate.value!!
+            else date = currentDate.value!!
+
             val result = context!!.getCovidApiReceivedService()?.getData(date)
             Log.d("getTag", "getTotalReports from viewmodel: ")
             if (result != null){
