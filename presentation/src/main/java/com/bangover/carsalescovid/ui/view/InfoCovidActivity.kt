@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -87,7 +88,12 @@ class InfoCovidActivity : AppCompatActivity() {
     }
 
     private fun showDatePicker() {
-        datePicker.show(supportFragmentManager, "datePicker")
+        try {
+            datePicker.show(supportFragmentManager, "datePicker")
+        }catch (e: Exception){
+            Log.e("getTag", "showDatePicker: ${e.message}")
+        }
+
     }
 
     private fun onDateSelected(day: Int, month: Int, year: Int) {
@@ -119,11 +125,20 @@ class InfoCovidActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        datePicker.dismiss()
+        try {
+            datePicker.dismiss()
+        }catch (e: Exception){
+            Log.e("getTag", "onDestroy: ${e.message}")
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        datePicker.dismiss()
+        try {
+            datePicker.dismiss()
+        }catch (e: Exception){
+            Log.e("getTag", "onPause: ${e.message}")
+        }
+
     }
 }
