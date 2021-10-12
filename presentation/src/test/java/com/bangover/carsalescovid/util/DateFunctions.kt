@@ -11,7 +11,7 @@ class DateFunctions {
     }
     fun getMonth(): Int{
         val parts = getDate().split("-")
-        return parts[1].toInt()
+        return parts[1].toInt() - 1
     }
     fun getYear(): Int{
         val parts = getDate().split("-")

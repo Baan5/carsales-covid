@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import au.com.carsales.basemodule.context
 import com.bangover.carsalescovid.getCovidApiReceivedService
 import com.example.covidapiservicemodule.data.model.CovidModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -20,13 +22,17 @@ class CovidViewModel: ViewModel(){
     val currentDateLiveData: MutableLiveData<String> = MutableLiveData()
     val selectedDate = MutableLiveData<String>()
 
+    init {
+        visibility.postValue(true)
+    }
+
     @SuppressLint("CheckResult")
     fun getTotalReports(){
 
-        viewModelScope.launch {
-            var date:String
-            if (selectedDate.value != null) date = selectedDate.value!!
-            else date = currentDateLiveData.value!!
+        viewModelScope.launch(Dispatchers.IO) {
+            var date:String = "2021-10-10"
+//            if (selectedDate.value != null) date = selectedDate.value!!
+//            else date = currentDateLiveData.value!!
 
             val result = context!!.getCovidApiReceivedService()?.getData(date)
             Log.d("getTag", "getTotalReports from viewmodel: ")
@@ -40,7 +46,7 @@ class CovidViewModel: ViewModel(){
         }
     }
 
-    fun dateSelected(day: Int, month: Int, year: Int): String{
+    fun dateSelected(day: Int, month: Int, year: Int){
         var mMonth = ""
         var mDay = ""
         if (month + 1 < 10){
@@ -51,7 +57,10 @@ class CovidViewModel: ViewModel(){
             mDay = "0$day"
         }else mDay = day.toString()
 
-        return String.format("%s-%s-%s", year, mMonth, mDay)
+        val date = String.format("%s-%s-%s", year, mMonth, mDay)
+
+        visibility.postValue(true)
+        selectedDate.postValue(date)
     }
 
     fun convertDate(fecha: String): String{

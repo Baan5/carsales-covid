@@ -28,8 +28,12 @@ class InfoCovidActivity : AppCompatActivity() {
         binding = ActivityInfoCovidBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupView()
+
+    }
+
+    private fun setupView(){
         covidViewModel.getCurrentDate()
-        covidViewModel.visibility.postValue(true)
         covidViewModel.currentDateLiveData.observe(this, {
             covidViewModel.getTotalReports()
         })
@@ -58,7 +62,6 @@ class InfoCovidActivity : AppCompatActivity() {
             binding.progressCircular.isVisible = it
             binding.lyData.isVisible = !it
         })
-
     }
 
     private fun showDatePicker() {
@@ -71,9 +74,7 @@ class InfoCovidActivity : AppCompatActivity() {
     }
 
     private fun onDateSelected(day: Int, month: Int, year: Int) {
-        val date = covidViewModel.dateSelected(day, month, year)
-        covidViewModel.visibility.postValue(true)
-        covidViewModel.selectedDate.postValue(date)
+        covidViewModel.dateSelected(day, month, year)
     }
 
     override fun onDestroy() {
