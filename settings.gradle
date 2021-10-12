@@ -1,10 +1,14 @@
-dependencyResolutionManagement {
+/*dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
     }
-}
+}*/
 rootProject.name = "Carsales Covid"
-include ':app'
+include ':presentation'
+include ':basemodule', ':routercovidmodule', ':covidapiservicemodule'
+project(':basemodule').projectDir = new File('android.basemodule/basemodule')
+project(':routercovidmodule').projectDir = new File('android.routercovidmodule/routercovidmodule')
+project(':covidapiservicemodule').projectDir = new File('android.covidapiservicemodule/covidapiservicemodule')
