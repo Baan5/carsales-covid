@@ -25,4 +25,12 @@ class DateFunctions {
         return sdf.format(fecha.time)
     }
 
+    fun getDateOneDayLess(): String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        var fecha = Calendar.getInstance()
+        fecha.time = Date()
+        fecha.add(Calendar.DAY_OF_MONTH, -1)
+        return sdf.format(fecha.time)
+    }
+
 }

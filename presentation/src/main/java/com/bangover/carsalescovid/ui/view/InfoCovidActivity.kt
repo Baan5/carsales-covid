@@ -30,7 +30,7 @@ class InfoCovidActivity : AppCompatActivity() {
 
         covidViewModel.getCurrentDate()
         covidViewModel.visibility.postValue(true)
-        covidViewModel.currentDate.observe(this, {
+        covidViewModel.currentDateLiveData.observe(this, {
             covidViewModel.getTotalReports()
         })
         covidViewModel.selectedDate.observe(this, {

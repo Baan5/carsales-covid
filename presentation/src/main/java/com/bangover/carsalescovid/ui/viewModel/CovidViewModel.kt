@@ -15,9 +15,9 @@ import java.util.*
 class CovidViewModel: ViewModel(){
 
 
-    val dataCovid = MutableLiveData<CovidModel?>()
+    val dataCovid: MutableLiveData<CovidModel?> = MutableLiveData()
     val visibility = MutableLiveData<Boolean>()
-    val currentDate = MutableLiveData<String>()
+    val currentDateLiveData: MutableLiveData<String> = MutableLiveData()
     val selectedDate = MutableLiveData<String>()
 
     @SuppressLint("CheckResult")
@@ -26,7 +26,7 @@ class CovidViewModel: ViewModel(){
         viewModelScope.launch {
             var date:String
             if (selectedDate.value != null) date = selectedDate.value!!
-            else date = currentDate.value!!
+            else date = currentDateLiveData.value!!
 
             val result = context!!.getCovidApiReceivedService()?.getData(date)
             Log.d("getTag", "getTotalReports from viewmodel: ")
@@ -85,7 +85,7 @@ class CovidViewModel: ViewModel(){
         fecha.time = Date()
         fecha.add(Calendar.DAY_OF_MONTH, -1)
         val date = sdf.format(fecha.time)
-        currentDate.postValue(date)
+        currentDateLiveData.postValue(date)
     }
 
 }
