@@ -30,12 +30,12 @@ class CovidViewModel: ViewModel(){
     fun getTotalReports(){
 
         viewModelScope.launch(Dispatchers.IO) {
-            var date:String = "2021-10-10"
-//            if (selectedDate.value != null) date = selectedDate.value!!
-//            else date = currentDateLiveData.value!!
+            var date:String
+            if (selectedDate.value != null) date = selectedDate.value!!
+            else date = currentDateLiveData.value!!
 
             val result = context!!.getCovidApiReceivedService()?.getData(date)
-            Log.d("getTag", "getTotalReports from viewmodel: ")
+            //Log.d("getTag", "getTotalReports from viewmodel: ")
             if (result != null){
                 dataCovid.postValue(result)
                 visibility.postValue(false)
